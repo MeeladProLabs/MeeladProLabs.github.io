@@ -1,15 +1,173 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>MeeladProLabs</title>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    :root{--bg:#091018;--accent:#ffd700;--muted:#b9c2c9}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,-apple-system,'Helvetica Neue',Arial;background:var(--bg);color:#fff}
+    header{display:flex;justify-content:space-between;align-items:center;padding:18px 36px;background:linear-gradient(0deg,rgba(0,0,0,.25),transparent);position:sticky;top:0;z-index:50}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand img{width:44px;height:44px;border-radius:10px;object-fit:cover}
+    .brand h1{font-size:18px;margin:0;color:var(--accent);letter-spacing:1px}
+    nav a{color:#dfe7ec;text-decoration:none;margin-left:18px;font-weight:600}
+    .hero{position:relative;min-height:76vh;display:flex;align-items:center}
+    .hero .banner{position:absolute;inset:0;background-image:url('images/DramaticImageBanner.jpg');background-size:cover;background-position:center;filter:brightness(.48);}
+    .hero .overlay{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:80px 36px;display:flex;gap:40px;align-items:center}
+    .hero .content{flex:1}
+    .kicker{color:var(--muted);text-transform:uppercase;letter-spacing:2px;font-size:12px;margin-bottom:12px}
+    h2.title{font-size:48px;margin:0 0 18px;color:#fff;line-height:1.02}
+    p.lead{color:#d9e1e6;font-size:18px;margin-bottom:24px;max-width:680px}
+    .cta{display:flex;gap:14px}
+    .btn{padding:12px 18px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--accent),#fff3a1);color:#091018}
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,.12);color:#fff}
+    .hero-visual{width:360px;border-radius:14px;overflow:hidden;box-shadow:0 20px 60px rgba(4,6,12,.6);}
+    .hero-visual img{width:100%;height:auto;display:block}
+
+    .features{padding:64px 36px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.2))}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;max-width:1200px;margin:0 auto}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));padding:22px;border-radius:12px;border:1px solid rgba(255,255,255,.04);min-height:160px;display:flex;flex-direction:column;gap:12px}
+    .card h3{margin:0;color:var(--accent)}
+    .card p{margin:0;color:var(--muted);flex:1}
+
+    .apps{padding:60px 36px}
+    .apps .app-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;max-width:1200px;margin:0 auto}
+    .app-tile{background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,.01));padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,.03);display:flex;gap:12px;align-items:center}
+    .app-tile img{width:64px;height:64px;border-radius:10px;object-fit:cover}
+    .app-tile .meta{flex:1}
+    .footer{padding:28px 36px;text-align:center;color:var(--muted);border-top:1px solid rgba(255,255,255,.03)}
+
+    /* login modal */
+    .login-btn{padding:10px 14px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#fff}
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;z-index:200}
+    .modal{background:linear-gradient(180deg,#0f1724,#091018);padding:28px;border-radius:12px;width:420px;box-shadow:0 20px 60px rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.05)}
+    .modal h4{margin:0 0 8px;color:var(--accent)}
+    .modal .oauth{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+    .oauth a{display:inline-flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;text-decoration:none;color:#091018;font-weight:700}
+    .oauth .github{background:#fff}
+    .oauth .google{background:#4285F4;color:#fff}
+
+    @media (max-width:900px){.hero{min-height:60vh}.overlay{padding:40px 18px;flex-direction:column;align-items:flex-start}.hero-visual{width:100%}}
+  </style>
 </head>
 <body>
-  <header><h1>MeeladProLabs</h1></header>
-  <main><p>Welcome — redesign in progress.</p></main>
-  <footer>MeeladProLabs</footer>
-  <script src="assets/js/main.js"></script>
+  <header>
+    <div class="brand">
+      <img src="images/DramaticImageBanner.jpg" alt="MPL" />
+      <h1>MeeladProLabs</h1>
+    </div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#apps">Apps</a>
+      <button class="login-btn" id="openLogin">Log In</button>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Intro">
+    <div class="banner" aria-hidden="true"></div>
+    <div class="overlay">
+      <div class="content">
+        <div class="kicker">Phase 1 • Starter App</div>
+        <h2 class="title">MeeladProLabs — Tools that amplify your workflow</h2>
+        <p class="lead">Open-source, production-ready apps and experiments that accelerate development. Sign in to access your personalized workspace and launch sample apps.</p>
+        <div class="cta">
+          <button class="btn primary" id="getStarted">Get Started</button>
+          <button class="btn ghost" id="learnMore">Learn More</button>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <img src="images/DramaticImageBanner.jpg" alt="Dramatic banner visual" />
+      </div>
+    </div>
+  </section>
+
+  <section id="features" class="features">
+    <div class="grid">
+      <div class="card">
+        <h3>Open Source</h3>
+        <p>All projects are free and community-driven — use, fork, and contribute.</p>
+      </div>
+      <div class="card">
+        <h3>Production Focused</h3>
+        <p>Ship quality apps with CI, testing, and deployment best practices in mind.</p>
+      </div>
+      <div class="card">
+        <h3>Extensible</h3>
+        <p>Pluggable modules and integrations so teams can build around their workflows.</p>
+      </div>
+      <div class="card">
+        <h3>Secure</h3>
+        <p>Auth-ready patterns and secure defaults to protect user data and apps.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="apps" class="apps">
+    <h3 style="text-align:center;color:var(--accent);margin-bottom:18px">Sample Apps</h3>
+    <div class="app-grid">
+      <div class="app-tile">
+        <img src="images/DramaticImageBanner.jpg" alt="App"/>
+        <div class="meta"><strong>AI Playground</strong><div style="color:var(--muted)">Try models and tune prompts.</div></div>
+        <button class="btn ghost">Open</button>
+      </div>
+      <div class="app-tile">
+        <img src="images/DramaticImageBanner.jpg" alt="App"/>
+        <div class="meta"><strong>Benchmark Suite</strong><div style="color:var(--muted)">Automated model comparisons.</div></div>
+        <button class="btn ghost">Open</button>
+      </div>
+      <div class="app-tile">
+        <img src="images/DramaticImageBanner.jpg" alt="App"/>
+        <div class="meta"><strong>Deploy Center</strong><div style="color:var(--muted)">Deploy apps to hosting.</div></div>
+        <button class="btn ghost">Open</button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">© 2026 MeeladProLabs</footer>
+
+  <!-- Login modal -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <h4 id="loginTitle">Sign in to MeeladProLabs</h4>
+      <p style="color:var(--muted);margin:6px 0 12px">Choose a provider to sign in. For Phase 1 we support GitHub OAuth (client-side redirect placeholder).</p>
+      <div class="oauth">
+        <a class="github" id="signinGithub" href="#">Sign in with GitHub</a>
+        <a class="google" id="signinGoogle" href="#">Sign in with Google</a>
+      </div>
+      <p style="color:var(--muted);font-size:13px;margin-top:12px">(These links are placeholders — they should be wired to an OAuth flow or serverless function.)</p>
+      <div style="text-align:right;margin-top:12px"><button id="closeModal" class="btn ghost">Close</button></div>
+    </div>
+  </div>
+
+  <script>
+    // Modal logic
+    const modal = document.getElementById('modal');
+    document.getElementById('openLogin').addEventListener('click', ()=> modal.style.display = 'flex');
+    document.getElementById('closeModal').addEventListener('click', ()=> modal.style.display = 'none');
+    document.addEventListener('click', (e)=>{ if(e.target===modal) modal.style.display='none'; });
+
+    // Learn more scroll
+    document.getElementById('learnMore').addEventListener('click', ()=>{ document.getElementById('features').scrollIntoView({behavior:'smooth'}); });
+
+    // Placeholder sign-in handlers — open GitHub OAuth app guide
+    document.getElementById('signinGithub').addEventListener('click', (e)=>{
+      e.preventDefault();
+      alert('To enable GitHub sign-in: create a GitHub OAuth App (Settings → Developer settings) and configure a server endpoint or use GitHub Actions/Functions. I can scaffold the backend when you are ready.');
+    });
+
+    document.getElementById('signinGoogle').addEventListener('click', (e)=>{
+      e.preventDefault();
+      alert('Google sign-in requires OAuth client and server-side exchange. I can scaffold this for Firebase Auth or an OAuth server.');
+    });
+
+    // Simple scroll reveal
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(ent=>{ if(ent.isIntersecting){ ent.target.style.opacity=1; ent.target.style.transform='none'; obs.unobserve(ent.target); } });
+    },{threshold:0.15});
+    document.querySelectorAll('.card, .app-tile, .hero .content').forEach(el=>{ el.style.opacity=0; el.style.transform='translateY(20px)'; obs.observe(el); });
+  </script>
 </body>
 </html>

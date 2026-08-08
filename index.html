@@ -238,119 +238,53 @@
             color: #ffed4e;
         }
 
-        /* Scroll-Driven Animations */
-        @supports (animation-timeline: view()) {
-            .fade-in {
-                animation: fadeInUp 1s ease-out forwards;
-                animation-timeline: view();
-                animation-range: entry 0% cover 30%;
-            }
-
-            .fade-in-left {
-                animation: fadeInFromLeft 1s ease-out forwards;
-                animation-timeline: view();
-                animation-range: entry 0% cover 30%;
-            }
-
-            .fade-in-right {
-                animation: fadeInFromRight 1s ease-out forwards;
-                animation-timeline: view();
-                animation-range: entry 0% cover 30%;
-            }
-
-            .scale-in {
-                animation: scaleInUp 1s ease-out forwards;
-                animation-timeline: view();
-                animation-range: entry 0% cover 30%;
-            }
-
-            @keyframes fadeInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(30px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            @keyframes fadeInFromLeft {
-                from {
-                    opacity: 0;
-                    transform: translateX(-50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-
-            @keyframes fadeInFromRight {
-                from {
-                    opacity: 0;
-                    transform: translateX(50px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateX(0);
-                }
-            }
-
-            @keyframes scaleInUp {
-                from {
-                    opacity: 0;
-                    transform: scale(0.95) translateY(20px);
-                }
-                to {
-                    opacity: 1;
-                    transform: scale(1) translateY(0);
-                }
-            }
-
-            /* Parallax scroll effect */
-            .hero-logo img {
-                animation: parallaxFloat linear forwards;
-                animation-timeline: view();
-                animation-range: entry 0% cover 100%;
-            }
-
-            @keyframes parallaxFloat {
-                0% {
-                    transform: translateY(-30px);
-                }
-                100% {
-                    transform: translateY(30px);
-                }
-            }
-
-            /* Section title animation */
-            .section-title {
-                animation: titleReveal 1s ease-out forwards;
-                animation-timeline: view();
-                animation-range: entry 0% cover 30%;
-            }
-
-            @keyframes titleReveal {
-                from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                    letter-spacing: 5px;
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                    letter-spacing: 1px;
-                }
-            }
+        /* Scroll-Driven Animations - will be handled by JavaScript */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        /* Fallback for browsers that don't support scroll-driven animations */
-        @supports not (animation-timeline: view()) {
-            .fade-in, .fade-in-left, .fade-in-right, .scale-in {
-                opacity: 1;
-                transform: none !important;
-            }
+        .scroll-animate.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate-left {
+            opacity: 0;
+            transform: translateX(-50px);
+        }
+
+        .scroll-animate-left.in-view {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate-right {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+
+        .scroll-animate-right.in-view {
+            opacity: 1;
+            transform: translateX(0);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .scroll-animate-scale {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .scroll-animate-scale.in-view {
+            opacity: 1;
+            transform: scale(1);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .parallax-element {
+            position: relative;
         }
 
         @media (max-width: 768px) {
@@ -398,7 +332,7 @@
     <main>
         <section class="hero">
             <div class="container" style="display: flex; gap: 40px; align-items: center; width: 100%;">
-                <div class="hero-content fade-in-left">
+                <div class="hero-content scroll-animate-left">
                     <h1>MeeladProLabs</h1>
                     <p class="tagline">
                         Loaded with <span class="highlight">cutting‑edge projects</span>, 
@@ -410,7 +344,7 @@
                         <a href="#features" class="btn btn-secondary">Learn More</a>
                     </div>
                 </div>
-                <div class="hero-logo fade-in-right">
+                <div class="hero-logo scroll-animate-right parallax-element">
                     <img src="MPL Logo.jpg" alt="MeeladProLabs Logo">
                 </div>
             </div>
@@ -418,34 +352,34 @@
 
         <section class="features" id="features">
             <div class="container">
-                <h2 class="section-title fade-in">What We Offer</h2>
+                <h2 class="section-title scroll-animate">What We Offer</h2>
                 <div class="feature-grid">
-                    <div class="feature-card scale-in">
+                    <div class="feature-card scroll-animate-scale">
                         <div class="feature-icon">⚡</div>
                         <h3>Cutting-Edge Projects</h3>
                         <p>Innovative solutions forged with unique abilities to solve modern challenges.</p>
                     </div>
-                    <div class="feature-card scale-in">
+                    <div class="feature-card scroll-animate-scale">
                         <div class="feature-icon">🔓</div>
                         <h3>Open Source</h3>
                         <p>Free and accessible to everyone. Built by the community, for the community.</p>
                     </div>
-                    <div class="feature-card scale-in">
+                    <div class="feature-card scroll-animate-scale">
                         <div class="feature-icon">🚀</div>
                         <h3>Production Ready</h3>
                         <p>Robust applications designed for real-world deployment and reliability.</p>
                     </div>
-                    <div class="feature-card scale-in">
+                    <div class="feature-card scroll-animate-scale">
                         <div class="feature-icon">🎯</div>
                         <h3>Workflow Amplification</h3>
                         <p>Tools and apps that boost your productivity and streamline your processes.</p>
                     </div>
-                    <div class="feature-card scale-in">
+                    <div class="feature-card scroll-animate-scale">
                         <div class="feature-icon">🔧</div>
                         <h3>Advanced Tools</h3>
                         <p>State-of-the-art technology and frameworks for modern development.</p>
                     </div>
-                    <div class="feature-card scale-in">
+                    <div class="feature-card scroll-animate-scale">
                         <div class="feature-icon">🤝</div>
                         <h3>Community Driven</h3>
                         <p>Collaborate with developers worldwide to create amazing projects.</p>
@@ -466,6 +400,39 @@
     </footer>
 
     <script>
+        // Scroll Animation System
+        const scrollAnimationElements = document.querySelectorAll('[class*="scroll-animate"]');
+        const parallaxElement = document.querySelector('.parallax-element');
+
+        function updateScrollAnimations() {
+            const scrollPosition = window.scrollY;
+            const windowHeight = window.innerHeight;
+
+            // Parallax effect for logo
+            if (parallaxElement) {
+                const parallaxOffset = scrollPosition * 0.5;
+                parallaxElement.style.transform = `translateY(${parallaxOffset}px)`;
+            }
+
+            // Animate elements based on viewport position
+            scrollAnimationElements.forEach((element) => {
+                const elementPosition = element.getBoundingClientRect();
+                const elementTop = elementPosition.top;
+                const elementBottom = elementPosition.bottom;
+
+                // Trigger animation when element enters viewport
+                if (elementBottom > 0 && elementTop < windowHeight) {
+                    element.classList.add('in-view');
+                }
+            });
+        }
+
+        // Listen to scroll events
+        window.addEventListener('scroll', updateScrollAnimations);
+        
+        // Initial check on page load
+        updateScrollAnimations();
+
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
             anchor.addEventListener('click', function (e) {
